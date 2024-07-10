@@ -52,6 +52,9 @@ int main() {
         else if (strcmp(linha, "ORDENA_LISTA_VALOR") == 0) {
             estoque = OrdenaListaValor(estoque);
         }
+        else{
+            fprintf(fp, "FALHA NA LEITURA DA LINHA");
+        }
     }
 
     fclose(fp);
