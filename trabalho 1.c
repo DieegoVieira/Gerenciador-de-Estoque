@@ -53,10 +53,10 @@ int main() {
             estoque = OrdenaListaValor(estoque);
         }
         else{
-            fprintf(fp, "FALHA NA LEITURA DA LINHA");
+            fprintf(fp, "COMANDO NÃO IDENTIFICADO");
         }
     }
-
+    free(estoque);
     fclose(fp);
     return 0;
 }

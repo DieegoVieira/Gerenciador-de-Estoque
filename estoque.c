@@ -69,7 +69,7 @@ Lista * RetiraListaMedicamento(FILE *fp, Lista *l, int id_medicamento) {
     return l;
 }
 
-/* Verifica se um medicamento e s t presente em uma determinada lista */
+/* Verifica se um medicamento está presente em uma determinada lista */
 void VerificaListaMedicamento ( FILE * fp , Lista * l , int id_medicamento ){
     FILE *out_fp = fopen("saida.txt", "a");
     if (out_fp == NULL) {
@@ -94,20 +94,27 @@ void VerificaListaValidade ( FILE * fp , Lista * l , int * data ){
         printf("\nFalha em abrir o arquivo de saída!");
     }
     Lista *aux;
+    int i=0;
     for(aux=l; aux != NULL; aux = aux->prox){
         if(aux->remedio->data[2]  < data[2]){
             fprintf(out_fp, "MEDICAMENTO %s %i VENCIDO\n", aux->remedio->nome, aux->remedio->codigo);
+            i++;
         }
         else if(aux->remedio->data[2] == data[2]){
             if(aux->remedio->data[1] < data[1]){
                 fprintf(out_fp, "MEDICAMENTO %s %i VENCIDO\n", aux->remedio->nome, aux->remedio->codigo);
+                i++;
             }
             else if(aux->remedio->data[1] == data[1]){
                 if(aux->remedio->data[0] < data[0]){
                     fprintf(out_fp, "MEDICAMENTO %s %i VENCIDO\n", aux->remedio->nome, aux->remedio->codigo);
+                    i++;
                 }
             }
         }
+    }
+    if(i == 0){
+        fprintf(out_fp, "NÃO HÁ MEDICAMENTO VENCIDOS\n");
     }
     fclose(out_fp);
 }
@@ -127,6 +134,7 @@ void ImprimeListaMedicamentos ( FILE * fp , Lista * l ){
     fclose(out_fp);
 }
 
+// Troca o medicamento de um item da lista pelo outro
 void trocaListas(Lista *A, Lista *B){
     Medicamento *c;
     c= A->remedio;
